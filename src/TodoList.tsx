@@ -1,37 +1,37 @@
 import React from 'react';
-import {TaskType} from "./App";
+import {FilterValuesType, TaskType} from "./App";
 
 type TodoListPropsType = {
     title: string
     tasks: Array<TaskType>
+    removeTasks: (id: number) => void
+    changeFilter: (value: FilterValuesType) => void
 }
 // const TodoList: React.FC<TodoListPropsType> = () => {
 const TodoList: React.FC<TodoListPropsType> = (props) => {
-    let isAllTasksNotDone = true
-    for (let i=0; i < props.tasks.length; i++) {
-        if(props.tasks[1].isDone) {
-            isAllTasksNotDone = false
-        }
-    }
+    // debugger
 
-    const todoClasses = isAllTasksNotDone ? "todolist-empty" : "todolist"
 
     return (
-        <div className={todoClasses}>
+        <div className={"todolist"}>
             <h3>{props.title}</h3>
             <div>
                 <input/>
                 <button>+</button>
             </div>
             <ul>
-                <li><input type="checkbox" checked={props.tasks[0].isDone}/> <span>{props.tasks[0].title}</span></li>
-                <li><input type="checkbox" checked={props.tasks[1].isDone}/> <span>{props.tasks[1].title}</span></li>
-                <li><input type="checkbox" checked={props.tasks[2].isDone}/> <span>{props.tasks[2].title}</span></li>
+                {props.tasks.map(ddd => <li><input type="checkbox" checked={ddd.isDone}/>
+                    <span>{ddd.title}</span>
+                    <button onClick={ () => { props.removeTasks(ddd.id) }}>+</button>
+                    </li>
+
+                )}
             </ul>
+
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={ () => {props.changeFilter("all")}} >All</button>
+                <button onClick={ () => {props.changeFilter("active")} }>Active</button>
+                <button onClick={ () => {props.changeFilter("completed")} }>Completed</button>
             </div>
         </div>
     );
