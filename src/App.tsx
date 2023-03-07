@@ -20,7 +20,7 @@ function App(): JSX.Element {
         {id: 3, title: "ES6/TS", isDone: false},
         {id: 4, title: "Redux", isDone: true}
     ]);
-    let [filter, setFilter] = useState<FilterValuesType>("active");
+    let [filter, setFilter] = useState<FilterValuesType>("all");
 
 
     function removeTask(id: number) {
@@ -34,10 +34,10 @@ function App(): JSX.Element {
 
     let tasksForTodoList = tasks;
     if (filter === "completed") {
-        tasksForTodoList = tasks.filter(t => t.isDone === true);
+        tasksForTodoList = tasks.filter(t => t.isDone);
     }
     if (filter === "active") {
-        tasksForTodoList = tasks.filter(t => t.isDone === false);
+        tasksForTodoList = tasks.filter(t => !t.isDone);
     }
 
     return (
